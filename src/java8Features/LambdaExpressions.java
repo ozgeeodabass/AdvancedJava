@@ -2,7 +2,9 @@ package java8Features;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.IntSupplier;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -73,6 +75,30 @@ public class LambdaExpressions {
     //Comsumers
     //Predicates
     //Functions
+
+    //********************Creating or Prodiving objects with Supplier<T> Interface***********************
+    //a supplier does not take any arguments and returns an object.
+    // it has no default or static method, just a plain get() method;
+    //@FunctionalInterface
+    //public interface Supplier<T> {
+    //
+    //    T get();
+    //}
+
+    //Implementation of this interface as lambda expression;
+    Supplier<String> supplier = () -> "Hi there!";
+    //suplier.get() will invoke the lambda
+
+    //for ex: specialized form of supplier interface: IntSupplier
+    //it is useful in boxing/unboxing operation between int and Integer
+    Random random = new Random(314L);
+    IntSupplier intSupplier = () -> random.nextInt();
+    int integer = intSupplier.getAsInt();
+    //The JDK gives you four of these specialized suppliers, to avoid unnecessary boxing / unboxing in your application;
+    // IntSupplier, BooleanSupplier, LongSupplier and DoubleSupplier.
+
+    //********************Consuming objects with Consumer<T> Interface***********************
+
 
 
 
