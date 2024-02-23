@@ -1,4 +1,5 @@
 package java8Features.StreamAPI;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -115,6 +116,36 @@ public class JavaStreamAPI {
                 .map(e->e.salary)
                 .collect(Collectors.toList());
         System.out.println(salaries);
+
+        //***************************************************************************************************************************************
+        //FLATMAP METHOD
+        //Returns a stream consisting of the results of replacing each element of this stream with the contents of a mapped stream produced by applying the provided mapping function to each element.
+        //NOTE: map works in one-to-one manner, but flatmap works in one-to-many manner.
+
+        List<Integer> list1= Arrays.asList(1,2);
+        List<Integer> list2= Arrays.asList(3,4);
+        List<Integer> list3= Arrays.asList(5,6);
+        List<List<Integer>> finalList = Arrays.asList(list1,list2,list3);
+        System.out.println(finalList);
+        List<Integer> finalResult= finalList.stream()
+                .flatMap(x -> x.stream().map(n->n+10))
+                .collect(Collectors.toList());
+        System.out.println(finalResult);
+
+
+        List<String> teamA = Arrays.asList("Scott","John","April");
+        List<String> teamB = Arrays.asList("Jony","Kitty","Ken");
+        List<String> teamC = Arrays.asList("Chen","Jary","Lina");
+        List<List<String>> listOfAllTeams = Arrays.asList(teamA,teamB,teamC);
+        //get the people whoes names starts with 'J' in each team
+        List<String> filteredResult = listOfAllTeams.stream()
+                .flatMap(l->l.stream().filter(n->n.startsWith("J")))
+                .collect(Collectors.toList());
+        System.out.println(filteredResult);
+
+
+
+
 
 
 
