@@ -1,8 +1,7 @@
 package java8Features.StreamAPI;
+import javax.print.DocFlavor;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class Product{
@@ -143,8 +142,66 @@ public class JavaStreamAPI {
                 .collect(Collectors.toList());
         System.out.println(filteredResult);
 
+        //***************************************************************************************************************************************
+        //OTHER METHODS
 
+        //distinct method -> non-terminal method
+        List<Integer> ids = Arrays.asList(1,2,3,1,3,4,4,5,7);
+        //find distinct ids
+        List<Integer> distinctIds= ids.stream().distinct().collect(Collectors.toList());
+        System.out.println(distinctIds);
 
+        //count -> terminal method
+        //find the num of elements of distinct ids
+        long count = distinctIds.stream().count();
+        System.out.println("Count of distinct ids: " + count);
+
+        //limit -> non-terminal method
+        //i want to collect some limited objects from ids list
+        List<Integer> limited4 = ids.stream().limit(4).collect(Collectors.toList());
+        System.out.println("Limited 4 objects: "+limited4);
+
+        //min and max methods -> terminal methods
+        //get max id
+        Optional<Integer> maxId = ids.stream().max((id1, id2)->{return id1.compareTo(id2);});
+        System.out.println(maxId.get());
+
+        //reduce method -> terminal method
+        //reduce -> Performs a reduction on the elements of this stream, using an associative accumulation function, and returns an Optional describing the reduced value, if any.
+        List<String> stringList = Arrays.asList("A","B","C","1","2","3");
+        Optional<String> reduced= stringList.stream().reduce((value,combinedvalue)->{
+            return combinedvalue+value;
+        });
+        System.out.println("Reduced value: " + reduced.get());
+
+        //Note: non-terminal operations returns stream
+
+        //sorted method -> non-terminal method, sorts the objects in the stream
+        List<Integer> listNotSorted = Arrays.asList(2,4,1,3,7,5,9,1);
+        List<Integer> listSorted = listNotSorted.stream().sorted((i1,i2)->{return i1.compareTo(i2);}).collect(Collectors.toList());
+        System.out.println("Sorted list: "+listSorted);
+        //how to sort in reversed order?
+        List<Integer> listSortedReverse = listNotSorted.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        System.out.println("Reversed Sorted List: " + listSortedReverse);
+
+        //anyMatch -> Returns whether any elements of this stream match the provided predicate.
+        //allMatch -> Returns whether all elements of this stream match the provided predicate.
+        //noneMatch -> Returns whether no elements of this stream match the provided predicate.
+        Set<String> fruites = new HashSet<String>();
+        fruites.addAll(List.of("one apple","one mango","two grapes","two apples","two orange"));
+        boolean anyMatchResult = fruites.stream().anyMatch(f->f.startsWith("one"));
+        System.out.println("Is there any fruit that we have only one of it: " + anyMatchResult);
+        boolean allMatchResult = fruites.stream().allMatch(f->f.startsWith("two"));
+        System.out.println("Are there two of each of our fruits: " + allMatchResult);
+        boolean noneMatchResult = fruites.stream().noneMatch(f->f.startsWith("three"));
+        System.out.println("Isn't there any fruit that we has 3 of it: " + noneMatchResult);
+
+        //findFirst -> terminal method, returns an Optional describing the first element of this stream, or an empty Optional if the stream is empty.
+        Optional<String> first = fruites.stream().findFirst();
+        System.out.println("First fruit: " + first.get());
+        //findAny -> terminal method, returns an Optional describing some element of the stream, or an empty Optional if the stream is empty.
+        Optional<String> any = fruites.stream().findAny();
+        System.out.println("Any fruit: " + any.get());
 
 
 
