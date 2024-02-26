@@ -204,7 +204,22 @@ public class JavaStreamAPI {
         System.out.println("Any fruit: " + any.get());
 
 
+        //***************************************************************************************************************************************
+        //PARALLEL STREAM
+        //When a stream executes in parallel, Java runtime divides th stream into multiple sub streams.
+        //Aggregate operations process these sub streams in parallel and then combine results.
 
+        List<Employee> employeeList = Arrays.asList(
+                new Employee(1,"Emre",25000),
+                new Employee(2,"Özge",30000),
+                new Employee(3,"Hasan",35000),
+                new Employee(4,"Şeyda",17000),
+                new Employee(5,"Lale",17800),
+                new Employee(6,"İrem",85666),
+                new Employee(7,"Mehmet",1708)
+        );
+
+        employeeList.parallelStream().filter(e->e.salary>27000).limit(3).forEach(e-> System.out.println(e.name));
 
     }
 }
